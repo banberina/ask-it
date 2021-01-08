@@ -1,0 +1,19 @@
+{
+  "name": "askit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/banberina/ask-it.git"
+  },
+  "author": "Berina Bandic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/banberina/ask-it/issues"
+  },
+  "homepage": "https://github.com/banberina/ask-it#readme"
+}
