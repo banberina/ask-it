@@ -7,7 +7,7 @@ const Votes = require('../controller/votes.controller');
 //---------------------- QUESTIONS --------------------------//
 
 router.get("/", Questions.getAllQuestions)
-router.get("/hotquestions", Questions.getHotQuestions)
+router.get("/hot", Questions.getHotQuestions)
 router.post("/", Questions.postAQuestion)
 router.get("/:qID", Questions.getAQuestion)
 router.put("/:qID", Questions.editAQuestion)
