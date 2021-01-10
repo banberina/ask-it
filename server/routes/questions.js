@@ -11,7 +11,6 @@ router.get("/", Questions.getAllQuestions)
 router.get("/hotquestions", Questions.getHotQuestions)
 router.post("/", Questions.postAQuestion)
 router.get("/:qID", Questions.getAQuestion)
-router.get("/my", Questions.getMyQuestions)
 router.put("/:qID", Questions.editAQuestion)
 router.delete("/:qID", Questions.deleteAQuestion)
 

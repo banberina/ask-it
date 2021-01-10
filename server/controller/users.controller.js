@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/user.model");
+const Question = require("../models/question.model");
 const helpers = require("../helpers/index");
 
 module.exports = {
@@ -20,6 +21,20 @@ module.exports = {
         else res.send(user);
       }
     );
+  },
+
+  getMyQuestions: (req, res, next) => {
+    const token = req.headers.authorization || req.body.token;
+    const user = helpers.decodeToken(token);
+    if (user) {
+      Question.find({ by: req.params.uID })
+        .then(function (questions) {
+          res.send(questions);
+        })
+        .catch((err) => console.error(err));
+    } else {
+      res.send({ message: "User token is invalid" });
+    }
   },
 
   editAUserName: (req, res, next) => {

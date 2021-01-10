@@ -15,10 +15,6 @@ var UserSchema = new Schema({
     type: String,
     default: "user",
   },
-  answers: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Question",
-  },
   noOfAnswers: {
     type: Number,
     default: 0,

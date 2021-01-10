@@ -14,6 +14,7 @@ module.exports = {
       })
       .catch((err) => console.error(err));
   },
+  
   getHotQuestions: (req, res, next) => {
     Question.find({})
       .sort({ votes: -1 })
@@ -21,24 +22,6 @@ module.exports = {
         res.send(questions);
       })
       .catch((err) => console.error(err));
-  },
-
-  getMyQuestions: (req, res, next) => {
- //   const token = req.headers.authorization || req.body.token;
-   // const user = helpers.decodeToken(token);
-    //if (user) {
-      Question.findById("by._id" )
-/*        .sort({ createdAt: -1 })
-         .populate("by")
-        .populate("answers.by") */
-        .then(function (questions) {
-          res.send(questions);
-        })
-        .catch((err) => console.error(err));
-    //} 
-    //else {
-      //res.send({ message: "User token is invalid" });
-    //}
   },
 
   postAQuestion: (req, res, next) => {
