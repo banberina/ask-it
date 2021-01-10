@@ -1,4 +1,3 @@
-
 var express = require('express')
 const router = express.Router();
 const Questions = require('../controller/questions.controller')
@@ -19,7 +18,7 @@ router.delete("/:qID", Questions.deleteAQuestion)
 router.post('/:qID/answer', Answers.postAnAnswer)
 router.put('/:qID/answer/:aID', Answers.editAnAnswer)
 router.delete('/:qID/answer/:aID', Answers.deleteAnAnswer)
-
+router.put('/increase/:uID',Answers.increaseNumberOfAnswers)
 //-------------------------- QUESTION & ANSWER VOTE ---------------------------------//
 
 router.put('/:qID/voteup', Votes.voteUpAQuestion)
