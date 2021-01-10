@@ -5,10 +5,12 @@ const helpers = require("../helpers/index");
 
 module.exports = {
   getUsersWithMostComments: (req, res, next) => {
-    const users = User.find({}, (err, users) => {
-      if (err) res.send(err);
-      else res.send(users);
-    });
+    const users = User.find({})
+      .sort({ noOfAnswers: -1 })
+      .then(function (questions) {
+        res.send(questions);
+      })
+      .catch((err) => console.error(err));
   },
 
   getAUser: (req, res, next) => {
