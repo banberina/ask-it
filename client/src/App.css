@@ -1,16 +1,6 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  min-height: 100vh;
 }
 
 .App-header {
@@ -22,17 +12,17 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  color: #282c34;
 }
 
-.App-link {
-  color: #61dafb;
+.special-font-header {
+  font-family: 'Architects Daughter', cursive
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.special-font-subheader {
+  font-family: 'Montserrat', sans-serif
+}
+
+.special-font-paragrph {
+  font-family: 'Open Sans', sans-serif
 }
