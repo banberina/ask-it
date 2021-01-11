@@ -15,13 +15,13 @@ import QuestionPage from "./pages/individual-question /individual-question.compo
 import ProfilePage from "./pages/profile/profile.component";
 import MyQuestionsPage from "./pages/my-questions/my-questions.component";
 import NotFoundPage from "./pages/404/not-found.component";
+import NotRegisteredPage from "./pages/not-available/not-available.component";
 
 import { ToastContainer } from "react-toastify";
 
-import { hasValidJwt } from "./utils/jwtValidator";
+import { checkToken } from "./utils/utils";
 
 import "react-toastify/dist/ReactToastify.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 /* Private routes - if the user is authenticated, render component; otherwise redirect to home page */
@@ -29,21 +29,26 @@ const UserRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      hasValidJwt() === true ? <Component {...props} /> : <Redirect to="/" />
+      checkToken() === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/notregistered" />
+      )
     }
   />
 );
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <ToastContainer />
       <Router>
-      <NavBar />
+        <NavBar />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegistrationPage} />
+          <Route exact path="/signup" component={RegistrationPage} />
+          <Route exact path="/notregistered" component={NotRegisteredPage} />
           <UserRoute
             exact
             path="/question/:questionId"
@@ -56,6 +61,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
