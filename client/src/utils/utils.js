@@ -1,13 +1,10 @@
 const getBaseUrl = () => {
-  var getUrl = window.location;
-  var baseUrl =
-    getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split("/")[1];
-  if (baseUrl.includes("localhost")) {
-    baseUrl = "http://localhost:3000";
+  let baseUrl;
+  if (process.env.NODE_ENV === "development") {
+    baseUrl = "http://localhost:3001";
   } else {
-    baseUrl = getUrl.protocol + "//" + getUrl.host;
+    baseUrl = "https://granapp.herokuapp.com";
   }
-  // console.log(baseUrl);
   return baseUrl;
 };
 
