@@ -2,15 +2,17 @@ import React from "react";
 
 import JumbotronLoggedOut from "../../components/welcome-jumbotron/jumbotron-logged-out.component";
 import JumbotronLoggedIn from "../../components/welcome-jumbotron/jumbotron-logged-in.component";
+import LatestQuestionsFeed from "../../components/latest-questions-feed/latest-questions-feed.component";
 
 import "./home.styles.scss";
 
-import { hasValidJwt } from "../../utils/jwtValidator";
+import { checkToken } from "../../utils/utils";
 
 const Homepage = () => {
   return (
     <div className="home">
-      {hasValidJwt() ? <JumbotronLoggedIn /> : <JumbotronLoggedOut />}
+      {checkToken() ? <JumbotronLoggedIn /> : <JumbotronLoggedOut />}
+      <LatestQuestionsFeed />
     </div>
   );
 };

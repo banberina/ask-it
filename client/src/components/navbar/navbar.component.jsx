@@ -11,7 +11,7 @@ import {
   Collapse,
 } from "reactstrap";
 
-import { hasValidJwt } from "../../utils/jwtValidator";
+import { checkToken } from "../../utils/utils";
 
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ const NavBar = (props) => {
           </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
-            {hasValidJwt() ? (
+            {checkToken() ? (
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <NavLink className="nav" href="/notifications">
