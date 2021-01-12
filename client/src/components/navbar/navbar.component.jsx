@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./navbar.styles.scss";
+import { withRouter } from "react-router-dom";
+
 import {
   Container,
   Navbar,
@@ -12,10 +13,17 @@ import {
 } from "reactstrap";
 
 import { checkToken } from "../../utils/utils";
+import helpers from "../../utils/helpers";
 
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const toggle = () => setIsOpen(!isOpen);
+
+  const logout = () => {
+    helpers.deleteToken();
+    props.history.push("/");
+  };
 
   return (
     <div className="navigation">
@@ -29,25 +37,29 @@ const NavBar = (props) => {
             {checkToken() ? (
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink className="nav" href="/notifications">
-                    Login
+                  <NavLink className="special-font-subheader" href="/profile/">
+                    My profile
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav" href="/logout">
-                    Sign up
+                  <NavLink
+                    onClick={logout}
+                    className="special-font-subheader"
+                    style={{ cursor: "pointer" }}
+                  >
+                    Log out
                   </NavLink>
                 </NavItem>
               </Nav>
             ) : (
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink className="nav" href="/signup">
+                  <NavLink className="special-font-subheader" href="/signup">
                     Sign up
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav" href="/login">
+                  <NavLink className="special-font-subheader" href="/login">
                     Sign in
                   </NavLink>
                 </NavItem>
@@ -60,4 +72,4 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;
+export default withRouter(NavBar);
