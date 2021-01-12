@@ -1,5 +1,3 @@
-import jwt_decode from "jwt-decode";
-
 const getBaseUrl = () => {
   let baseUrl;
   if (process.env.NODE_ENV === "development") {
