@@ -38,6 +38,19 @@ const UserRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      checkToken() === false ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/" />
+      )
+    }
+  />
+);
+
 const App = () => {
   return (
     <div className="App">
@@ -46,9 +59,9 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/signup" component={RegistrationPage} />
-          <Route exact path="/notregistered" component={NotRegisteredPage} />
+          <PublicRoute exact path="/login" component={LoginPage} />
+          <PublicRoute exact path="/signup" component={RegistrationPage} />
+          <PublicRoute exact path="/notregistered" component={NotRegisteredPage} />
           <UserRoute
             exact
             path="/question/:questionId"
