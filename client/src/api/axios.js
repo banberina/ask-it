@@ -1,5 +1,6 @@
 import axios from "axios";
-import { parseJwt, BASE_URL } from "../utils/utils";
+import { BASE_URL } from "../utils/utils";
+import helpers from '../utils/helpers'
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -9,7 +10,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    const jwt = parseJwt(localStorage.getItem("jwt"));
+    const jwt = helpers.decodeToken();
     if (Math.floor(Date.now() / 1000) > jwt.exp) {
       localStorage.removeItem("jwt");
       window.location.href = "/";
