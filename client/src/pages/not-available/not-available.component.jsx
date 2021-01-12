@@ -37,7 +37,7 @@ const NotAvailable = () => {
                 color="info"
                 href="/login"
               >
-                Login
+                Sign in
               </Button>
             </p>
           </Col>

@@ -1,7 +1,9 @@
-import { BASE_URL } from "../utils";
+import { BASE_URL } from "../utils/utils";
 import axios from "axios";
 
-export const auth = {
+const auth = {
   login: (body) => axios.post(`${BASE_URL}/auth/login`, body),
   registration: (body) => axios.post(`${BASE_URL}/auth/signup`, body),
 };
+
+export default auth;

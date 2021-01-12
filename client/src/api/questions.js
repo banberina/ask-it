@@ -1,7 +1,7 @@
-import { BASE_URL, getHeaders } from "../utils";
+import { BASE_URL, getHeaders } from "../utils/utils";
 import axios from "./axios";
 
-export const questions = {
+const questions = {
   latestQuestions: () => axios.get(`${BASE_URL}/questions`),
 
   hotQuestions: () => axios.get(`${BASE_URL}/questions/hot`),
@@ -68,3 +68,5 @@ export const questions = {
       }
     ),
 };
+
+export default questions;

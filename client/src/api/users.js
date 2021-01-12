@@ -1,7 +1,7 @@
-import { BASE_URL, getHeaders } from "../utils";
+import { BASE_URL, getHeaders } from "../utils/utils";
 import axios from "./axios";
 
-export const users = {
+const users = {
   getMostActiveUsers: () => axios.get(`${BASE_URL}/users/mostactive`),
 
   getOneUser: (userKey) =>
@@ -29,3 +29,5 @@ export const users = {
       headers: getHeaders(),
     }),
 };
+
+export default users;

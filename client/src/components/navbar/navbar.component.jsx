@@ -48,7 +48,7 @@ const NavBar = (props) => {
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav" href="/login">
-                    Login
+                    Sign in
                   </NavLink>
                 </NavItem>
               </Nav>
