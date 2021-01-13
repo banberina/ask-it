@@ -1,5 +1,5 @@
 import { BASE_URL, getHeaders } from "../utils/utils";
-import axios from "./axios";
+import axios from "axios";
 
 const users = {
   getMostActiveUsers: () => axios.get(`${BASE_URL}/users/mostactive`),

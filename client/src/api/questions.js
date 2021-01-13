@@ -1,5 +1,5 @@
 import { BASE_URL, getHeaders } from "../utils/utils";
-import axios from "./axios";
+import axios from "axios";
 
 const questions = {
   latestQuestions: () => axios.get(`${BASE_URL}/questions`),
