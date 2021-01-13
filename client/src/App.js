@@ -62,7 +62,7 @@ const App = () => {
           <PublicRoute exact path="/login" component={LoginPage} />
           <PublicRoute exact path="/signup" component={RegistrationPage} />
           <PublicRoute exact path="/notregistered" component={NotRegisteredPage} />
-          <UserRoute
+          <PublicRoute
             exact
             path="/question/:questionId"
             component={QuestionPage}
