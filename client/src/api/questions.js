@@ -1,5 +1,6 @@
 import { BASE_URL, getHeaders } from "../utils/utils";
 import axios from "axios";
+import helpers from "../utils/helpers";
 
 const questions = {
   latestQuestions: () => axios.get(`${BASE_URL}/questions`),
@@ -7,9 +8,9 @@ const questions = {
   hotQuestions: () => axios.get(`${BASE_URL}/questions/hot`),
 
   postAQuestion: (body) =>
-  axios.post(`${BASE_URL}/questions`, body, {
-    headers: getHeaders(),
-  }),
+    axios.post(`${BASE_URL}/questions`, body, {
+      headers: { "Authorization": helpers.getToken() },
+    }),
 
   getOneQuestion: (questionKey) =>
     axios.get(`${BASE_URL}/questions/${questionKey}`, {
@@ -18,36 +19,36 @@ const questions = {
 
   postAnAnswer: (questionKey, body) =>
     axios.post(`${BASE_URL}/questions/${questionKey}/answer`, body, {
-      headers: getHeaders(),
+      headers: { "Authorization": helpers.getToken() },
     }),
 
   editAnAnswer: (questionKey, answerKey, body) =>
     axios.put(
       `${BASE_URL}/questions/${questionKey}/answer/${answerKey}`,
       body,
-      { headers: getHeaders() }
+      { headers: { Authorization: helpers.getToken() } }
     ),
 
   deleteAnAnswer: (questionKey, answerKey, body) =>
     axios.delete(
       `${BASE_URL}/questions/${questionKey}/answer/${answerKey}`,
       body,
-      { headers: getHeaders() }
+      { headers: { Authorization: helpers.getToken() } }
     ),
 
   increaseNumberOfAnswers: (userKey, body) =>
     axios.put(`${BASE_URL}/questions/${userKey}`, body, {
-      headers: getHeaders(),
+      headers: { Authorization: helpers.getToken() },
     }),
 
   likeTheQuestion: (questionKey, body) =>
     axios.put(`${BASE_URL}/questions/${questionKey}/voteup`, body, {
-      headers: getHeaders(),
+      headers: { Authorization: helpers.getToken() },
     }),
 
   dislikeTheQuestion: (questionKey, body) =>
     axios.put(`${BASE_URL}/questions/${questionKey}/votedown`, body, {
-      headers: getHeaders(),
+      headers: { Authorization: helpers.getToken() },
     }),
 
   likeTheAnswer: (questionKey, answerKey, body) =>
@@ -55,7 +56,7 @@ const questions = {
       `${BASE_URL}/questions/${questionKey}/answer/${answerKey}/voteup`,
       body,
       {
-        headers: getHeaders(),
+        headers: { Authorization: helpers.getToken() },
       }
     ),
 
@@ -64,7 +65,7 @@ const questions = {
       `${BASE_URL}/questions/${questionKey}/answer/${answerKey}/votedown`,
       body,
       {
-        headers: getHeaders(),
+        headers: { Authorization: helpers.getToken() },
       }
     ),
 };
