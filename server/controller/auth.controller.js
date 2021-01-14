@@ -63,7 +63,7 @@ module.exports = {
           const token = jwt.sign(
             data,
             process.env.JWT_SECRET || config.JWT_SECRET,
-            { expiresIn: "10h"}
+            { expiresIn: "2h"}
           );
           res.send({
             token: token,
