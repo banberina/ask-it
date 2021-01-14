@@ -4,22 +4,21 @@ import { withRouter } from "react-router";
 
 import QuestionCard from "../question-cards/question-card.component";
 
-import { Container, Jumbotron, Spinner, Button } from "reactstrap";
+import { Container, Jumbotron, Spinner } from "reactstrap";
 
 import { questions } from "../../api/index";
 
 import moment from "moment";
 
-const LatestQuestionsFeed = () => {
+const HotQuestionsFeed = () => {
   const [questionList, setQuestionList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleQuestions, setVisibleQuestions] = useState(1);
   const [votesChange, setVotesChange] = useState(false);
 
   const fetchLatestQuestions = async () => {
     setIsLoading(true);
 
-    await questions.latestQuestions().then((res) => {
+    await questions.hotQuestions().then((res) => {
       setQuestionList(res.data);
     });
     setIsLoading(false);
@@ -37,27 +36,24 @@ const LatestQuestionsFeed = () => {
     });
   };
 
-  const handleLoadMore = () => {
-    setVisibleQuestions((prevVisibleQuestions) => prevVisibleQuestions + 3);
-  };
   useEffect(() => {
     fetchLatestQuestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [votesChange]);
 
   return (
-    <div className="latest-questions-feed">
+    <div>
       <Jumbotron fluid>
         <Container>
-          <h3 className="special-font-subheader text-left">What's new?</h3>
+          <h3 className="special-font-subheader text-left">Hot right now:</h3>
           <hr />
           {isLoading ? (
             <Spinner />
           ) : (
-            questionList.slice(0, visibleQuestions).map((question) => {
+            questionList.map((question) => {
               return (
                 <QuestionCard
-                  key={question._id}
+                  key={question.id}
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}
                   questionID={question.id}
@@ -73,12 +69,10 @@ const LatestQuestionsFeed = () => {
               );
             })
           )}
-          <hr />
-          <Button onClick={handleLoadMore}>Load more</Button>
         </Container>
       </Jumbotron>
     </div>
   );
 };
 
-export default withRouter(LatestQuestionsFeed);
+export default withRouter(HotQuestionsFeed);
