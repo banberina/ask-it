@@ -17,8 +17,11 @@ const QuestionCard = ({
   questionName,
   questionID,
   likeQuestion,
+  upvote,
   dislikeQuestion,
+  downvote,
   noOfQuestionLikes,
+  timeOfPostingQuestion
 }) => {
   return (
     <div className="question-card">
@@ -31,8 +34,8 @@ const QuestionCard = ({
             {questionContent}
           </CardLink>
         </CardTitle>
-        <CardSubtitle style={{ textAlign: "left" }}>
-          {questionName}
+        <CardSubtitle style={{ textAlign: "left", color:"#bedde9" }}>
+          posted by {questionName} <br/>{timeOfPostingQuestion}
         </CardSubtitle>
         <hr />
         {checkToken() ? (
@@ -41,7 +44,7 @@ const QuestionCard = ({
               className="btn float-left"
               outline
               color="light"
-              onClick={likeQuestion}
+              onClick={()=>upvote(likeQuestion)}
               size="sm"
             >
               <FontAwesomeIcon icon={faArrowUp} /> {noOfQuestionLikes}
@@ -50,7 +53,7 @@ const QuestionCard = ({
               className="btn btn-danger float-left"
               outline
               color="light"
-              onClick={dislikeQuestion}
+              onClick={()=>downvote(dislikeQuestion)}
               size="sm"
             >
               <FontAwesomeIcon icon={faArrowDown} />

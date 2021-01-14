@@ -6,7 +6,7 @@ import AnswerCard from "../answer-card/answer-card.component";
 
 import { checkToken } from "../../utils/utils";
 
-const QuestionCard = ({
+const QuestionCardDetailed = ({
   answers,
   questionContent,
   questionName,
@@ -51,7 +51,7 @@ const QuestionCard = ({
         ) : (
           <div></div>
         )}
-        <Button color="light" href={"/question/" + { questionID }}>
+        <Button color="light" href={`/question/${ questionID }`}>
           See the question
         </Button>
       </Card>
@@ -62,4 +62,4 @@ const QuestionCard = ({
   );
 };
 
-export default QuestionCard;
+export default QuestionCardDetailed;
