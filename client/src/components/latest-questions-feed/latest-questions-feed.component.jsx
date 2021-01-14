@@ -9,11 +9,12 @@ import { Container, Jumbotron, Spinner, Button } from "reactstrap";
 import { questions } from "../../api/index";
 
 import moment from "moment";
+import { checkToken } from "../../utils/utils";
 
 const LatestQuestionsFeed = () => {
   const [questionList, setQuestionList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleQuestions, setVisibleQuestions] = useState(1);
+  const [visibleQuestions, setVisibleQuestions] = useState(20);
   const [votesChange, setVotesChange] = useState(false);
 
   const fetchLatestQuestions = async () => {
@@ -40,6 +41,7 @@ const LatestQuestionsFeed = () => {
   const handleLoadMore = () => {
     setVisibleQuestions((prevVisibleQuestions) => prevVisibleQuestions + 3);
   };
+
   useEffect(() => {
     fetchLatestQuestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,8 +62,8 @@ const LatestQuestionsFeed = () => {
                   key={question._id}
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}
-                  questionID={question.id}
-                  profileID={question.by.id}
+                  questionID={question._id}
+                  profileID={question.by._id}
                   noOfQuestionLikes={question.votes}
                   upvote={upvoteQuestion}
                   likeQuestion={question._id}

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { auth } from "../../api/index";
-import { checkToken } from "../../utils/utils";
 import { toast } from "react-toastify";
 
 import {
@@ -22,12 +21,6 @@ const SignUpForm = (props) => {
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    if (checkToken()) {
-      props.history.push("/");
-    }
-  }, [props.history]);
 
   const handleInput = (event) => {
     const value = event.target.value;

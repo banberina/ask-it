@@ -18,11 +18,7 @@ const JumbotronLoggedIn = () => {
   };
 
   useEffect(() => {
-    if (!checkToken()) {
-      window.location.reload();
-    } else {
       fetchUserName();
-    }
   }, []);
  
   return (

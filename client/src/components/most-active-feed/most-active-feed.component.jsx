@@ -12,7 +12,7 @@ const MostActiveFeed = () => {
   const [usersList, setUsersList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchLatestQuestions = async () => {
+  const fetchMostActive = async () => {
     setIsLoading(true);
 
     await users.getMostActiveUsers().then((res) => {
@@ -22,8 +22,9 @@ const MostActiveFeed = () => {
   };
 
   useEffect(() => {
-    fetchLatestQuestions();
+    fetchMostActive();
   }, []);
+
   return (
     <div className="most-active-feed">
       <Jumbotron>
@@ -38,9 +39,9 @@ const MostActiveFeed = () => {
             usersList.map((user) => {
               return (
                 <UserCard
-                  key={user.id}
+                  key={user._id}
                   name={`${user.name} ${user.surname}`}
-                  userID={user.id}
+                  userID={user._id}
                   numberOfAnswers={user.noOfAnswers}
                 />
               );

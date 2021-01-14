@@ -10,12 +10,14 @@ import { questions } from "../../api/index";
 
 import moment from "moment";
 
+import { checkToken } from "../../utils/utils";
+
 const HotQuestionsFeed = () => {
   const [questionList, setQuestionList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [votesChange, setVotesChange] = useState(false);
 
-  const fetchLatestQuestions = async () => {
+  const fetchHotQuestions = async () => {
     setIsLoading(true);
 
     await questions.hotQuestions().then((res) => {
@@ -37,7 +39,7 @@ const HotQuestionsFeed = () => {
   };
 
   useEffect(() => {
-    fetchLatestQuestions();
+    fetchHotQuestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [votesChange]);
 
@@ -53,11 +55,11 @@ const HotQuestionsFeed = () => {
             questionList.map((question) => {
               return (
                 <QuestionCard
-                  key={question.id}
+                  key={question._id}
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}
-                  questionID={question.id}
-                  profileID={question.by.id}
+                  questionID={question._id}
+                  profileID={question.by._id}
                   noOfQuestionLikes={question.votes}
                   upvote={upvoteQuestion}
                   likeQuestion={question._id}
