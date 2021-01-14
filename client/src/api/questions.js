@@ -9,7 +9,7 @@ const questions = {
 
   postAQuestion: (body) =>
     axios.post(`${BASE_URL}/questions`, body, {
-      headers: { "Authorization": helpers.getToken() },
+      headers: { Authorization: helpers.getToken() },
     }),
 
   getOneQuestion: (questionKey) =>
@@ -17,9 +17,14 @@ const questions = {
       headers: getHeaders(),
     }),
 
+  getmyQuestions: (userKey) =>
+    axios.get(`${BASE_URL}/users/myquestions/${userKey}`, {
+      headers: { Authorization: helpers.getToken() },
+    }),
+
   postAnAnswer: (questionKey, body) =>
     axios.post(`${BASE_URL}/questions/${questionKey}/answer`, body, {
-      headers: { "Authorization": helpers.getToken() },
+      headers: { Authorization: helpers.getToken() },
     }),
 
   editAnAnswer: (questionKey, answerKey, body) =>
