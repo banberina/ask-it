@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
+
 import {
   Container,
   Navbar,
@@ -9,7 +10,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Collapse,
+  Collapse
 } from "reactstrap";
 
 import { users } from "../../api/index";
@@ -19,20 +20,18 @@ import helpers from "../../utils/helpers";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
-
+  
   const fetchUserName = async () => {
     await users
       .getOneUser(helpers.decodeToken()._id)
-      .then((res) => setId(res.data.id));
+      .then((res) => setId(res.data._id));
   };
 
   useEffect(() => {
-    if (!checkToken()) {
-      window.location.reload();
-    } else {
-      fetchUserName();
-    }
+    if (checkToken()) fetchUserName();
+    // }
   }, []);
+
   const toggle = () => setIsOpen(!isOpen);
 
   const logout = () => {
@@ -52,7 +51,25 @@ const NavBar = (props) => {
             {checkToken() ? (
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink className="special-font-subheader" href={`/profile/${id}`}>
+                  <NavLink
+                    className="special-font-subheader"
+                    href='/askquestion'
+                  >Ask a question
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className="special-font-subheader"
+                    href={`/myquestions/${id}`}
+                  >
+                    My questions
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className="special-font-subheader"
+                    href={`/profile/${id}`}
+                  >
                     My profile
                   </NavLink>
                 </NavItem>

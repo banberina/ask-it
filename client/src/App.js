@@ -16,6 +16,7 @@ import ProfilePage from "./pages/profile/profile.component";
 import MyQuestionsPage from "./pages/my-questions/my-questions.component";
 import NotFoundPage from "./pages/404/not-found.component";
 import NotRegisteredPage from "./pages/not-available/not-available.component";
+import AskQuestionPage from "./pages/ask-question/ask-question.component";
 
 import { ToastContainer } from "react-toastify";
 
@@ -32,7 +33,7 @@ const UserRoute = ({ component: Component, ...rest }) => (
       checkToken() === true ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/notregistered" />
+        <Redirect to="/login" />
       )
     }
   />
@@ -55,20 +56,13 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <PublicRoute exact path="/login" component={LoginPage} />
-          <PublicRoute exact path="/signup" component={RegistrationPage} />
-          <PublicRoute
-            exact
-            path="/notregistered"
-            component={NotRegisteredPage}
-          />
-          <PublicRoute
-            exact
-            path="/question/:questionId"
-            component={QuestionPage}
-          />
-          <PublicRoute exact path="/profile/:userId" component={ProfilePage} />
-          <UserRoute exact path="/my/:userId" component={MyQuestionsPage} />
+          <PublicRoute path="/login" component={LoginPage} />
+          <PublicRoute path="/signup" component={RegistrationPage} />
+          <PublicRoute path="/notregistered" component={NotRegisteredPage} />
+          <Route path="/question/:questionId" component={QuestionPage} />
+          <Route path="/profile/:userId" component={ProfilePage} />
+          <UserRoute path="/askquestion" component={AskQuestionPage} />
+          <UserRoute path="/myquestions/:userId" component={MyQuestionsPage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </Router>

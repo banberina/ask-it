@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+
+import MyProfile from "../../components/profile-card/profile-card.component";
 
 const ProfilePage = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return (
+    <div className="profile-page">
+      <MyProfile />
+    </div>
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

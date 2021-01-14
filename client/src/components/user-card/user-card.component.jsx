@@ -16,7 +16,7 @@ const UserCard = ({ name, userID, numberOfAnswers }) => {
         <CardText
           className="text-muted"
           style={{ textAlign: "left" }}
-        >{`Number of answers: ${numberOfAnswers}`}</CardText>
+        >{`Number of given answers: ${numberOfAnswers}`}</CardText>
         <div>
           <Button
             className="btn float-left"
