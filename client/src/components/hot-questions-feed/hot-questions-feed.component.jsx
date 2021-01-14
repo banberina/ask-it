@@ -43,9 +43,9 @@ const HotQuestionsFeed = () => {
 
   return (
     <div>
-      <Jumbotron fluid>
+      <Jumbotron>
         <Container>
-          <h3 className="special-font-subheader text-left">Hot right now:</h3>
+          <h3 className="special-font-subheader text-left">Hot questions:</h3>
           <hr />
           {isLoading ? (
             <Spinner />
@@ -57,6 +57,7 @@ const HotQuestionsFeed = () => {
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}
                   questionID={question.id}
+                  profileID={question.by.id}
                   noOfQuestionLikes={question.votes}
                   upvote={upvoteQuestion}
                   likeQuestion={question._id}

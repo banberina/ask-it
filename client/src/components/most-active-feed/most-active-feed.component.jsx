@@ -26,7 +26,7 @@ const MostActiveFeed = () => {
   }, []);
   return (
     <div className="most-active-feed">
-      <Jumbotron fluid>
+      <Jumbotron>
         <Container>
           <h3 className="special-font-subheader text-left">
             Most active users:

@@ -27,9 +27,9 @@ const JumbotronLoggedIn = () => {
  
   return (
     <div>
-      <Jumbotron fluid>
-        <Container fluid>
-          <h2 className="special-font-subheader">Welcome back, {name}.</h2>
+      <Jumbotron style={{ backgroundColor: "#ebcf73", borderColor: "#5a4fc" }}>
+        <Container>
+          <h1 style={{ color: "#2888a5c", fontFamily: "Architects Daughter"}}>Welcome back, {name}.</h1>
         </Container>
       </Jumbotron>
     </div>

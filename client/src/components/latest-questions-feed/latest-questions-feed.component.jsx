@@ -47,7 +47,7 @@ const LatestQuestionsFeed = () => {
 
   return (
     <div className="latest-questions-feed">
-      <Jumbotron fluid>
+      <Jumbotron>
         <Container>
           <h3 className="special-font-subheader text-left">What's new?</h3>
           <hr />
@@ -61,6 +61,7 @@ const LatestQuestionsFeed = () => {
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}
                   questionID={question.id}
+                  profileID={question.by.id}
                   noOfQuestionLikes={question.votes}
                   upvote={upvoteQuestion}
                   likeQuestion={question._id}
