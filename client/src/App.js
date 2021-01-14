@@ -42,11 +42,7 @@ const PublicRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      checkToken() === false ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/" />
-      )
+      checkToken() === false ? <Component {...props} /> : <Redirect to="/" />
     }
   />
 );
@@ -61,13 +57,17 @@ const App = () => {
           <Route exact path="/" component={Homepage} />
           <PublicRoute exact path="/login" component={LoginPage} />
           <PublicRoute exact path="/signup" component={RegistrationPage} />
-          <PublicRoute exact path="/notregistered" component={NotRegisteredPage} />
+          <PublicRoute
+            exact
+            path="/notregistered"
+            component={NotRegisteredPage}
+          />
           <PublicRoute
             exact
             path="/question/:questionId"
             component={QuestionPage}
           />
-          <UserRoute exact path="/profile/:userId" component={ProfilePage} />
+          <PublicRoute exact path="/profile/:userId" component={ProfilePage} />
           <UserRoute exact path="/my/:userId" component={MyQuestionsPage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
