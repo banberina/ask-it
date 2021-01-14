@@ -21,10 +21,10 @@ const helpers = {
       const decoded = jwt_decode(token);
       return {
         _id: decoded._id,
-        id: decoded.id,
         name: decoded.name,
         surname: decoded.surname,
         email: decoded.email,
+        exp: decoded.exp
       };
     } else {
       return null;

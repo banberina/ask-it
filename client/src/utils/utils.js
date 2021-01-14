@@ -1,3 +1,5 @@
+import helpers from './helpers'
+
 const getBaseUrl = () => {
   let baseUrl;
   if (process.env.NODE_ENV === "development") {
@@ -10,16 +12,17 @@ const getBaseUrl = () => {
 
 export const getHeaders = () => {
   return {
-    auth: localStorage.getItem("jwt"),
+    auth: helpers.getToken(),
   };
 };
 
 export const checkToken = () => {
-  if (!localStorage.getItem("jwt")) {
+  if (!helpers.getToken()) {
     return false;
   } else {
-    if (localStorage.getItem("jwt").exp < Math.floor(Date.now() / 1000)) {
+    if (helpers.decodeToken().exp < Math.floor(Date.now() / 1000)) {
       localStorage.removeItem("jwt");
+      window.location.reload();
       return false;
     }
   }
