@@ -2,7 +2,11 @@ import React from "react";
 
 import { Card, Button, CardTitle, CardLink, CardSubtitle } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUp,
+  faArrowDown,
+  faComment,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { checkToken } from "../../utils/utils";
 
@@ -18,6 +22,7 @@ const QuestionCard = ({
   noOfQuestionLikes,
   timeOfPostingQuestion,
   myquestions,
+  noOfComments,
 }) => {
   return (
     <div className="question-card">
@@ -66,7 +71,16 @@ const QuestionCard = ({
               size="sm"
             >
               <FontAwesomeIcon icon={faArrowDown} />
+            </Button><Button
+              className="btn float-left"
+              outline
+              color="light"
+              href={`/question/${questionID}`}
+              size="sm"
+            >
+              <FontAwesomeIcon icon={faComment} /> {noOfComments}
             </Button>
+           
           </div>
         ) : (
           <div>
@@ -79,6 +93,8 @@ const QuestionCard = ({
               className="btn float-left"
             >
               <FontAwesomeIcon icon={faArrowUp} /> {noOfQuestionLikes}
+              <br />
+              <FontAwesomeIcon icon={faComment} /> {noOfComments}
             </p>
           </div>
         )}

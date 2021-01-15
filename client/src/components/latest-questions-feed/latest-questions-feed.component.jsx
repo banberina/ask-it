@@ -69,9 +69,8 @@ const LatestQuestionsFeed = () => {
                   likeQuestion={question._id}
                   downvote={downvoteQuestion}
                   dislikeQuestion={question._id}
-                  timeOfPostingQuestion={moment(`${question.createdAt}`).format(
-                    "LLL"
-                  )}
+                  noOfComments={question.answers.length}
+                  timeOfPostingQuestion={moment(`${question.createdAt}`).format("LLL")}
                 />
               );
             })

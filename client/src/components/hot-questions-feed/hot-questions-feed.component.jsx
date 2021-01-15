@@ -64,6 +64,7 @@ const HotQuestionsFeed = () => {
                   likeQuestion={question._id}
                   downvote={downvoteQuestion}
                   dislikeQuestion={question._id}
+                  noOfComments={question.answers.length}
                   timeOfPostingQuestion={moment(`${question.createdAt}`).format(
                     "LLL"
                   )}

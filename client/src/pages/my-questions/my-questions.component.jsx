@@ -27,7 +27,6 @@ const MyQuestionsPage = () => {
       .getmyQuestions(location.pathname.split("/")[2])
       .then((res) => {
         setQuestionList(res.data);
-        console.log(res.data)
         if (res.data.length > 0) {
           setIsEmpty(false);
         }
@@ -67,6 +66,7 @@ const MyQuestionsPage = () => {
                 questionID={question._id}
                 profileID={question.by._id}
                 noOfQuestionLikes={question.votes}
+                noOfComments={question.answers.length}
                 timeOfPostingQuestion={moment(`${question.createdAt}`).format(
                   "LLL"
                   )}
