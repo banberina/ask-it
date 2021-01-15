@@ -33,16 +33,15 @@ const QuestionCardDetailed = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState({
     content: "",
-    by: "helpers.decodeToken()._id"
+    by: helpers.decodeToken()._id,
   });
-  
+
   const location = useLocation();
 
   const fetchQuestion = async () => {
     await questions
       .getOneQuestion(location.pathname.split("/")[2])
       .then((res) => {
-        console.log(res.data);
         setQuestion(res.data);
         setName(res.data.by);
         setAnswersList(res.data.answers);
@@ -61,8 +60,8 @@ const QuestionCardDetailed = () => {
     });
   };
 
-  const upvoteAnswer = async (questionId,answerId) => {
-    await questions.likeTheAnswer(questionId,answerId).then(() => {
+  const upvoteAnswer = async (questionId, answerId) => {
+    await questions.likeTheAnswer(questionId, answerId).then(() => {
       setVotesChange(true);
     });
   };
@@ -73,18 +72,13 @@ const QuestionCardDetailed = () => {
     });
   };
 
-  const editAnswer = async (questionId,answerId) => {
-    await questions.editAnAnswer(questionId,answerId).then(() => {
-      
-    });
+  const editAnswer = async (questionId, answerId) => {
+    await questions.editAnAnswer(questionId, answerId).then(() => {});
   };
 
   const deleteAnswer = async (questionId, answerId) => {
-    await questions.deleteAnAnswer(questionId,answerId).then((res) => {
-      
-    });
+    await questions.deleteAnAnswer(questionId, answerId).then((res) => {});
   };
-
 
   const handleInput = (event) => {
     const value = event.target.value;
@@ -101,7 +95,7 @@ const QuestionCardDetailed = () => {
     setIsLoading(true);
 
     await questions
-      .postAnAnswer(location.pathname.split("/")[2],input)
+      .postAnAnswer(location.pathname.split("/")[2], input)
       .then((res) => {
         window.location.href = location.pathname;
         toast.success("You've posted a new answer!", {
@@ -123,8 +117,12 @@ const QuestionCardDetailed = () => {
           draggable: true,
         });
       });
-      setIsLoading(false);
-};
+    setIsLoading(false);
+
+    await questions
+      .increaseNumberOfAnswers(helpers.decodeToken()._id)
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     fetchQuestion();
@@ -147,12 +145,17 @@ const QuestionCardDetailed = () => {
             </CardLink>
           </CardTitle>
           <CardSubtitle style={{ textAlign: "left", color: "#8a5353" }}>
-            posted by<br/>
+            posted by
+            <br />
             <CardLink
               href={`/profile/${name._id}`}
-              style={{ color: "#8a5353", cursor: "pointer", fontWeight: "bold" }}
+              style={{
+                color: "#8a5353",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
             >
-            {name.name} {name.surname}
+              {name.name} {name.surname}
             </CardLink>
             <br />
             {moment(`${question.createdAt}`).format("LLL")}
@@ -164,7 +167,7 @@ const QuestionCardDetailed = () => {
                 className="btn float-left"
                 outline
                 color="light"
-                onClick={upvoteQuestion}
+                onClick={() => upvoteQuestion(question._id)}
                 size="sm"
               >
                 <FontAwesomeIcon icon={faArrowUp} /> {question.votes}
@@ -173,7 +176,7 @@ const QuestionCardDetailed = () => {
                 className="btn btn-danger float-left"
                 outline
                 color="light"
-                onClick={downvoteQuestion}
+                onClick={() => downvoteQuestion(question._id)}
                 size="sm"
               >
                 <FontAwesomeIcon icon={faArrowDown} />
@@ -216,33 +219,40 @@ const QuestionCardDetailed = () => {
         <hr />
         {checkToken() ? (
           <div>
-
             <Card body inverse color="info">
-        <hr />
-        <h5 className="special-font-subheader" style={{textAlign:"left"}}>Want to give your answer?</h5>
-        <hr className="my-2" />
-        <Form className="form" onSubmit={handleAnswerSubmit}>
-          <FormGroup>
-            <Label for="content" className="special-font-subheader"></Label>
-            <Input
-              required={true}
-              type="textarea"
-              name="content"
-              id="content"
-              placeholder="Type your answer here"
-              onChange={handleInput}
-            />
-          </FormGroup>
-          <Button
-            disabled={isLoading}
-            type="submit"
-            color="light"
-            className="special-font-subheader"
-          >
-            {isLoading ? <Spinner size="sm" /> : "Post"}
-          </Button>
-        </Form>
-      </Card>
+              <hr />
+              <h5
+                className="special-font-subheader"
+                style={{ textAlign: "left" }}
+              >
+                Want to give your answer?
+              </h5>
+              <hr className="my-2" />
+              <Form className="form" onSubmit={handleAnswerSubmit}>
+                <FormGroup>
+                  <Label
+                    for="content"
+                    className="special-font-subheader"
+                  ></Label>
+                  <Input
+                    required={true}
+                    type="textarea"
+                    name="content"
+                    id="content"
+                    placeholder="Type your answer here"
+                    onChange={handleInput}
+                  />
+                </FormGroup>
+                <Button
+                  disabled={isLoading}
+                  type="submit"
+                  color="light"
+                  className="special-font-subheader"
+                >
+                  {isLoading ? <Spinner size="sm" /> : "Post"}
+                </Button>
+              </Form>
+            </Card>
           </div>
         ) : (
           <div>
@@ -258,7 +268,6 @@ const QuestionCardDetailed = () => {
             </p>
           </div>
         )}
-
       </Container>
     </div>
   );
