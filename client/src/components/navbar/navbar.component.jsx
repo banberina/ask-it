@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
-
 import {
   Container,
   Navbar,
@@ -10,7 +9,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Collapse
+  Collapse,
 } from "reactstrap";
 
 import { users } from "../../api/index";
@@ -20,7 +19,7 @@ import helpers from "../../utils/helpers";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
-  
+
   const fetchUserName = async () => {
     await users
       .getOneUser(helpers.decodeToken()._id)
@@ -29,7 +28,6 @@ const NavBar = (props) => {
 
   useEffect(() => {
     if (checkToken()) fetchUserName();
-    // }
   }, []);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -53,8 +51,9 @@ const NavBar = (props) => {
                 <NavItem>
                   <NavLink
                     className="special-font-subheader"
-                    href='/askquestion'
-                  >Ask a question
+                    href="/askquestion"
+                  >
+                    Ask a question
                   </NavLink>
                 </NavItem>
                 <NavItem>

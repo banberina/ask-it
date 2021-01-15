@@ -17,6 +17,7 @@ const QuestionCard = ({
   downvote,
   noOfQuestionLikes,
   timeOfPostingQuestion,
+  myquestions
 }) => {
   return (
     <div className="question-card">
@@ -28,8 +29,7 @@ const QuestionCard = ({
           >
             {questionContent}
           </CardLink>
-        </CardTitle>
-        <CardSubtitle style={{ textAlign: "left", color: "#bedde9" }}>
+        </CardTitle>{myquestions ? null: <CardSubtitle style={{ textAlign: "left", color: "#bedde9" }}>
           posted by{" "}
           <CardLink
             href={`/profile/${profileID}`}
@@ -38,9 +38,10 @@ const QuestionCard = ({
             {questionName}
           </CardLink><br />
           {timeOfPostingQuestion}
-        </CardSubtitle>
+        </CardSubtitle>}
+        
         <hr />
-        {checkToken() ? (
+        {checkToken() && myquestions === false ? (
           <div>
             <Button
               className="btn float-left"

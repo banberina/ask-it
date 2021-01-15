@@ -10,8 +10,6 @@ import { questions } from "../../api/index";
 
 import moment from "moment";
 
-import { checkToken } from "../../utils/utils";
-
 const HotQuestionsFeed = () => {
   const [questionList, setQuestionList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +53,7 @@ const HotQuestionsFeed = () => {
             questionList.map((question) => {
               return (
                 <QuestionCard
+                  myquestions={false}
                   key={question._id}
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}

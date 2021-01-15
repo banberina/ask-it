@@ -9,7 +9,6 @@ import { Container, Jumbotron, Spinner, Button } from "reactstrap";
 import { questions } from "../../api/index";
 
 import moment from "moment";
-import { checkToken } from "../../utils/utils";
 
 const LatestQuestionsFeed = () => {
   const [questionList, setQuestionList] = useState([]);
@@ -59,6 +58,7 @@ const LatestQuestionsFeed = () => {
             questionList.slice(0, visibleQuestions).map((question) => {
               return (
                 <QuestionCard
+                  myquestions={false}
                   key={question._id}
                   questionContent={question.content}
                   questionName={`${question.by.name} ${question.by.surname}`}

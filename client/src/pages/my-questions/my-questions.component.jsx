@@ -27,16 +27,18 @@ const MyQuestionsPage = () => {
       .getmyQuestions(location.pathname.split("/")[2])
       .then((res) => {
         setQuestionList(res.data);
+        console.log(res.data)
+        if (res.data.length > 0) {
+          setIsEmpty(false);
+        }
       });
-    if (questionList.length > 0) {
-      setIsEmpty(false);
-    }
     setIsLoading(false);
   };
 
   const handleLoadMore = () => {
     setVisibleQuestions((prevVisibleQuestions) => prevVisibleQuestions + 3);
   };
+
   useEffect(() => {
     if (checkToken()) fetchMyQuestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,14 +60,15 @@ const MyQuestionsPage = () => {
             questionList.slice(0, visibleQuestions).map((question) => {
               return (
                 <QuestionCard
-                  key={question._id}
-                  questionContent={question.content}
-                  questionName={`${question.by.name} ${question.by.surname}`}
-                  questionID={question.id}
-                  profileID={question.by.id}
-                  noOfQuestionLikes={question.votes}
-                  timeOfPostingQuestion={moment(`${question.createdAt}`).format(
-                    "LLL"
+                myquestions={true}
+                key={question._id}
+                questionContent={question.content}
+                questionName={`${question.by.name} ${question.by.surname}`}
+                questionID={question._id}
+                profileID={question.by._id}
+                noOfQuestionLikes={question.votes}
+                timeOfPostingQuestion={moment(`${question.createdAt}`).format(
+                  "LLL"
                   )}
                 />
               );

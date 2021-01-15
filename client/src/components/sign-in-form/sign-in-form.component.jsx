@@ -55,7 +55,7 @@ const SignInForm = (props) => {
       .then((res) => {
         if (res.data.token) {
           helpers.setToken(res.data.token);
-          props.history.push("/");
+          window.location.reload();
         }
       })
       .catch((error) => {
