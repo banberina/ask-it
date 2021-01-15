@@ -28,6 +28,7 @@ import moment from "moment";
 const QuestionCardDetailed = () => {
   const [answersList, setAnswersList] = useState([]);
   const [question, setQuestion] = useState("");
+  const [name, setName] = useState("");
   const [votesChange, setVotesChange] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState({
@@ -43,6 +44,7 @@ const QuestionCardDetailed = () => {
       .then((res) => {
         console.log(res.data);
         setQuestion(res.data);
+        setName(res.data.by);
         setAnswersList(res.data.answers);
       });
   };
@@ -145,12 +147,12 @@ const QuestionCardDetailed = () => {
             </CardLink>
           </CardTitle>
           <CardSubtitle style={{ textAlign: "left", color: "#8a5353" }}>
-            posted by 
+            posted by<br/>
             <CardLink
-              href={`/profile/${question._id}`}
+              href={`/profile/${name._id}`}
               style={{ color: "#8a5353", cursor: "pointer", fontWeight: "bold" }}
             >
-             { `$ {question.by.name}`}
+            {name.name} {name.surname}
             </CardLink>
             <br />
             {moment(`${question.createdAt}`).format("LLL")}
@@ -197,7 +199,7 @@ const QuestionCardDetailed = () => {
           <AnswerCard
             key={oneAnswer._id}
             answerContent={oneAnswer.content}
-            answerName={oneAnswer.by.name}
+            answerName={`${oneAnswer.by.name} ${oneAnswer.by.surname}`}
             answerNameID={oneAnswer.by._id}
             noOfAnswerLikes={oneAnswer.votes}
             qID={question._id}
