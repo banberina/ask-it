@@ -30,6 +30,7 @@ module.exports = {
     const user = helpers.decodeToken(token);
     if (user) {
       Question.find({ by: req.params.uID })
+        .sort({ createdAt: -1 })
         .then(function (questions) {
           res.send(questions);
         })
