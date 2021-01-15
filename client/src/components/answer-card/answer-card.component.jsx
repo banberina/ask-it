@@ -2,9 +2,20 @@ import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-import { Card, Button, CardText, CardLink } from "reactstrap";
-
-import helpers from "../../utils/helpers";
+import {
+  Card,
+  Button,
+  CardText,
+  CardLink,
+  Modal,
+  ModalHeader,
+  Form,
+  FormGroup,
+  ModalBody,
+  Label,
+  Input,
+  ModalFooter,
+} from "reactstrap";
 
 import { checkToken } from "../../utils/utils";
 
@@ -14,13 +25,18 @@ const AnswerCard = ({
   answerNameID,
   qID,
   aID,
+  modal,
+  openEditModal,
   editAnswer,
+  handleEditInput,
   deleteAnswer,
   noOfAnswerLikes,
   upvoteAnswer,
   downvoteAnswer,
-  decode,
-  answerTime
+  isMine,
+  answerTime,
+  oldQuestion,
+  content,
 }) => {
   return (
     <div className="answer-card">
@@ -28,15 +44,21 @@ const AnswerCard = ({
         <CardText tag="h4" style={{ color: "white", textAlign: "left" }}>
           {answerContent}
         </CardText>
-        <CardText tag = "h6">
+        <CardText tag="h6">
           <p style={{ color: "#ebcf73", textAlign: "left" }}>
             Posted by{" "}
             <CardLink
               href={`/profile/${answerNameID}`}
-              style={{ color: "white", cursor: "pointer", fontWeight: "bold" }}
+              style={{
+                color: "white",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
             >
               {answerName}
-            </CardLink>{" "}<br/>{answerTime}
+            </CardLink>{" "}
+            <br />
+            {answerTime}
           </p>
         </CardText>
         {checkToken() ? (
@@ -45,7 +67,7 @@ const AnswerCard = ({
               className="btn float-left"
               outline
               color="light"
-              onClick={() =>upvoteAnswer(qID,aID)}
+              onClick={() => upvoteAnswer(qID, aID)}
               size="sm"
             >
               <FontAwesomeIcon icon={faArrowUp} /> {noOfAnswerLikes}
@@ -54,11 +76,33 @@ const AnswerCard = ({
               className="btn btn-danger float-left"
               outline
               color="light"
-              onClick={() => downvoteAnswer(qID,aID)}
+              onClick={() => downvoteAnswer(qID, aID)}
               size="sm"
+              type="submit"
             >
               <FontAwesomeIcon icon={faArrowDown} />
             </Button>
+            {isMine ? (
+              <div>
+                <Button
+                  color="danger"
+                  className="btn float-right"
+                  onClick={() => deleteAnswer(qID, aID)}
+                  size="sm"
+                >
+                  Delete
+                </Button>
+                <Button
+                  className="btn float-right"
+                  color="success"
+                  style={{ outlineColor: "white" }}
+                  onClick={() => openEditModal()}
+                  size="sm"
+                >
+                  Edit
+                </Button>
+              </div>
+            ) : null}
           </div>
         ) : (
           <div>
@@ -74,20 +118,34 @@ const AnswerCard = ({
             </p>
           </div>
         )}
-
-        {checkToken() && (helpers.decodeToken()._id === {answerNameID}) ? (
-          <div>
-            <Button color="success" onClick={() =>editAnswer()}>
-              Edit
-            </Button>
-            <Button color="danger" onClick={() =>deleteAnswer()}>
-              Comment
-            </Button>
-          </div>
-        ) : (
-          <div></div>
-        )}
       </Card>
+      <Modal isOpen={modal} toggle={openEditModal}>
+        <ModalHeader toggle={openEditModal}>Edit answer</ModalHeader>
+        <Form className="form" onSubmit={() => editAnswer(qID, aID)}>
+          <FormGroup>
+            <ModalBody>
+              <Label for="content" className="special-font-subheader"></Label>
+              <Input
+                required={true}
+                type="textarea"
+                name={content}
+                id={content}
+                placeholder={oldQuestion}
+                onChange={handleEditInput}
+              />
+
+              <ModalFooter>
+                <Button color="info" onClick={() => editAnswer(qID, aID)}>
+                  Edit{" "}
+                </Button>{" "}
+                <Button color="secondary" onClick={() => openEditModal()}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </ModalBody>
+          </FormGroup>
+        </Form>
+      </Modal>
     </div>
   );
 };

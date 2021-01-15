@@ -34,10 +34,10 @@ const questions = {
       { headers: { Authorization: helpers.getToken() } }
     ),
 
-  deleteAnAnswer: (questionKey, answerKey, body) =>
+  deleteAnAnswer: (questionKey, answerKey) =>
     axios.delete(
       `${BASE_URL}/questions/${questionKey}/answer/${answerKey}`,
-      body,
+
       { headers: { Authorization: helpers.getToken() } }
     ),
 

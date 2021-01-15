@@ -13,6 +13,7 @@ import {
   Input,
   Spinner,
 } from "reactstrap";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
@@ -35,6 +36,9 @@ const QuestionCardDetailed = () => {
     content: "",
     by: helpers.decodeToken()._id,
   });
+
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
   const location = useLocation();
 
@@ -66,18 +70,46 @@ const QuestionCardDetailed = () => {
     });
   };
 
-  const downvoteAnswer = async (questionId, answerId) => {
+  const downvoteAnswer = async (e, questionId, answerId) => {
+    e.preventDefault();
     await questions.dislikeTheAnswer(questionId, answerId).then((res) => {
       setVotesChange(true);
     });
   };
 
   const editAnswer = async (questionId, answerId) => {
-    await questions.editAnAnswer(questionId, answerId).then(() => {});
+    setIsLoading(true);
+
+    await questions
+      .editAnAnswer(questionId, answerId, name)
+      .then((res) => {
+       // window.location.href = location.pathname;
+        toast.success("You've updated your answer!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      })
+      .catch((error) => {
+        toast.warning("Something's not right, try again!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      });
+    setIsLoading(false);
   };
 
   const deleteAnswer = async (questionId, answerId) => {
-    await questions.deleteAnAnswer(questionId, answerId).then((res) => {});
+    await questions.deleteAnAnswer(questionId, answerId).then((res) => {
+      window.location.href = location.pathname;
+    });
   };
 
   const handleInput = (event) => {
@@ -207,26 +239,29 @@ const QuestionCardDetailed = () => {
             noOfAnswerLikes={oneAnswer.votes}
             qID={question._id}
             aID={oneAnswer._id}
+            modal={modal}
+            editAnswer={editAnswer}
+            content={"content"}
             upvoteAnswer={upvoteAnswer}
             downvoteAnswer={downvoteAnswer}
-            editAnswer={editAnswer}
+            openEditModal={toggle}
             deleteAnswer={deleteAnswer}
+            oldQuestion={oneAnswer.content}
+            handleEditSubmit={handleInput}
             answerTime={moment(`${oneAnswer.createdAt}`).format("LLL")}
-            token={checkToken}
+            isMine={oneAnswer.by._id === helpers.decodeToken()._id}
           />
         ))}
-
         <hr />
         {checkToken() ? (
           <div>
-            <Card body inverse color="info">
-              <hr />
-              <h5
+            <Card body style={{ backgroundColor: "#ebcf73" }}>
+              <h3
                 className="special-font-subheader"
-                style={{ textAlign: "left" }}
+                style={{ textAlign: "left", color: "#8a5353" }}
               >
                 Want to give your answer?
-              </h5>
+              </h3>
               <hr className="my-2" />
               <Form className="form" onSubmit={handleAnswerSubmit}>
                 <FormGroup>
@@ -253,6 +288,7 @@ const QuestionCardDetailed = () => {
                 </Button>
               </Form>
             </Card>
+            <br />
           </div>
         ) : (
           <div>
