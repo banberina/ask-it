@@ -24,7 +24,7 @@ const MyProfile = () => {
     });
 
     if (checkToken()) {
-      if (userData._id === helpers.decodeToken()._id) setIsMyData(true);
+      if (userData._id === helpers.decodeToken()._id) {setIsMyData(true);}
     }
     setIsLoading(false);
   };
