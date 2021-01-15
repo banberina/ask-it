@@ -7,6 +7,8 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import { ToastContainer } from "react-toastify";
+
 import NavBar from "./components/navbar/navbar.component";
 import Homepage from "./pages/home/home.component";
 import LoginPage from "./pages/login/login.component";
@@ -49,6 +51,7 @@ const PublicRoute = ({ component: Component, ...rest }) => (
 const App = () => {
   return (
     <div className="App">
+      <ToastContainer />
       <Router>
         <NavBar />
         <Switch>

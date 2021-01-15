@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/avatar.svg";
 
 import {
-  Jumbotron,
   Card,
   CardTitle,
   CardSubtitle,

@@ -33,7 +33,7 @@ const SignInForm = (props) => {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-        draggable: true
+        draggable: true,
       });
       props.history.push("/");
     }
@@ -55,17 +55,17 @@ const SignInForm = (props) => {
       .then((res) => {
         if (res.data.token) {
           helpers.setToken(res.data.token);
-          window.location.reload();
+          props.history.push("/");
         }
       })
       .catch((error) => {
-        toast.warning("Something's not right, try again!", {
+        toast.warning(error.response.data.message + ", try again please", {
           position: "top-center",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
-          draggable: true
+          draggable: true,
         });
       });
 
@@ -97,7 +97,8 @@ const SignInForm = (props) => {
           </Col>
           <Col>
             <FormGroup>
-              <Label for="password" className="special-font-subheader">Password
+              <Label for="password" className="special-font-subheader">
+                Password
               </Label>
               <InputGroup>
                 <Input
@@ -119,7 +120,8 @@ const SignInForm = (props) => {
             className="special-font-subheader"
           >
             {isLoading ? <Spinner size="sm" /> : "Login"}
-          </Button></Form>
+          </Button>
+        </Form>
         <hr />
         <div>
           Don't have an account?
