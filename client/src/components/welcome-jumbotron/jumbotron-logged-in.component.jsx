@@ -4,8 +4,6 @@ import { Jumbotron, Container } from "reactstrap";
 
 import { users } from "../../api/index";
 
-import { checkToken } from "../../utils/utils";
-
 import helpers from "../../utils/helpers";
 
 const JumbotronLoggedIn = () => {

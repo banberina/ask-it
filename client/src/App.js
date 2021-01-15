@@ -18,8 +18,6 @@ import NotFoundPage from "./pages/404/not-found.component";
 import NotRegisteredPage from "./pages/not-available/not-available.component";
 import AskQuestionPage from "./pages/ask-question/ask-question.component";
 
-import { ToastContainer } from "react-toastify";
-
 import { checkToken } from "./utils/utils";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -51,7 +49,6 @@ const PublicRoute = ({ component: Component, ...rest }) => (
 const App = () => {
   return (
     <div className="App">
-      <ToastContainer />
       <Router>
         <NavBar />
         <Switch>
