@@ -28,8 +28,8 @@ const AnswerCard = ({
         <CardText tag="h4" style={{ color: "white", textAlign: "left" }}>
           {answerContent}
         </CardText>
-        <CardText>
-          <h6 style={{ color: "#ebcf73", textAlign: "left" }}>
+        <CardText tag = "h6">
+          <p style={{ color: "#ebcf73", textAlign: "left" }}>
             Posted by{" "}
             <CardLink
               href={`/profile/${answerNameID}`}
@@ -37,7 +37,7 @@ const AnswerCard = ({
             >
               {answerName}
             </CardLink>{" "}<br/>{answerTime}
-          </h6>
+          </p>
         </CardText>
         {checkToken() ? (
           <div>

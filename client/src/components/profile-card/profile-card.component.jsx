@@ -21,18 +21,21 @@ const MyProfile = () => {
     setIsLoading(true);
     await users.getOneUser(location.pathname.split("/")[2]).then((res) => {
       setUserData(res.data);
+      if (checkToken()) {
+        if (res.data._id === helpers.decodeToken()._id) {
+          setIsMyData(true);
+        }
+      }else;
+      setIsLoading(false);
     });
 
-    if (checkToken()) {
-      if (userData._id === helpers.decodeToken()._id) {setIsMyData(true);}
-    }
-    setIsLoading(false);
+
   };
 
   useEffect(() => {
     fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setIsMyData]);
   return (
     <div>
       {isLoading ? (
