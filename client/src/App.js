@@ -33,7 +33,7 @@ const UserRoute = ({ component: Component, ...rest }) => (
       checkToken() === true ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/notregistered" />
       )
     }
   />
@@ -59,8 +59,8 @@ const App = () => {
           <PublicRoute path="/login" component={LoginPage} />
           <PublicRoute path="/signup" component={RegistrationPage} />
           <PublicRoute path="/notregistered" component={NotRegisteredPage} />
-          <Route path="/question/:questionId" component={QuestionPage} />
           <Route path="/profile/:userId" component={ProfilePage} />
+          <UserRoute path="/question/:questionId" component={QuestionPage} />
           <UserRoute path="/askquestion" component={AskQuestionPage} />
           <UserRoute path="/myquestions/:userId" component={MyQuestionsPage} />
           <Route path="*" component={NotFoundPage} />

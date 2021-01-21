@@ -90,4 +90,26 @@ module.exports = {
       res.send({ message: "User token is invalid" });
     }
   },
+
+  decreaseNumberOfAnswers: (req, res, next) => {
+    const token = req.headers.authorization || req.body.token;
+    const user = helpers.decodeToken(token);
+    if (user) {
+      User.findOneAndUpdate(
+        { "_id": req.params.uID },
+        { $inc: { noOfAnswers: -1 } }
+      )
+        .then(function () {
+          Question.findOne({
+            _id: req.params.qID,
+            "answers._id": req.params.aID,
+          }).then(function (num) {
+            res.send(num);
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      res.send({ message: "User token is invalid" });
+    }
+  },
 };

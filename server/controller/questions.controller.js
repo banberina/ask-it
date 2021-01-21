@@ -14,10 +14,12 @@ module.exports = {
       })
       .catch((err) => console.error(err));
   },
-  
+
   getHotQuestions: (req, res, next) => {
     Question.find({})
       .sort({ votes: -1 })
+      .populate("by")
+      .populate("answers.by")
       .then(function (questions) {
         res.send(questions);
       })

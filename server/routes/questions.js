@@ -18,7 +18,8 @@ router.delete("/:qID", Questions.deleteAQuestion)
 router.post('/:qID/answer', Answers.postAnAnswer)
 router.put('/:qID/answer/:aID', Answers.editAnAnswer)
 router.delete('/:qID/answer/:aID', Answers.deleteAnAnswer)
-router.put('/increase/:uID',Answers.increaseNumberOfAnswers)
+router.put('/increase/:uID', Answers.increaseNumberOfAnswers)
+router.put('/decrease/:uID', Answers.decreaseNumberOfAnswers)
 //-------------------------- QUESTION & ANSWER VOTE ---------------------------------//
 
 router.put('/:qID/voteup', Votes.voteUpAQuestion)

@@ -42,7 +42,12 @@ const questions = {
     ),
 
   increaseNumberOfAnswers: (userKey, body) =>
-    axios.put(`${BASE_URL}/questions/${userKey}`, body, {
+    axios.put(`${BASE_URL}/questions/increase/${userKey}`, body, {
+      headers: { Authorization: helpers.getToken() },
+    }),
+
+  decreaseNumberOfAnswers: (userKey, body) =>
+    axios.put(`${BASE_URL}/questions/decrease/${userKey}`, body, {
       headers: { Authorization: helpers.getToken() },
     }),
 

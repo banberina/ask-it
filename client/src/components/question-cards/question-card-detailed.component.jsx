@@ -24,6 +24,7 @@ import helpers from "../../utils/helpers";
 import { checkToken } from "../../utils/utils";
 import { questions } from "../../api/index";
 
+import axios from "axios";
 import moment from "moment";
 
 const QuestionCardDetailed = () => {
@@ -32,13 +33,11 @@ const QuestionCardDetailed = () => {
   const [name, setName] = useState("");
   const [votesChange, setVotesChange] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const [input, setInput] = useState({
     content: "",
     by: helpers.decodeToken()._id,
   });
-
-  const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
 
   const location = useLocation();
 
@@ -70,20 +69,20 @@ const QuestionCardDetailed = () => {
     });
   };
 
-  const downvoteAnswer = async (e, questionId, answerId) => {
-    e.preventDefault();
+  const downvoteAnswer = async (questionId, answerId) => {
     await questions.dislikeTheAnswer(questionId, answerId).then((res) => {
       setVotesChange(true);
     });
   };
 
-  const editAnswer = async (questionId, answerId) => {
+  const handleEditAnswer = async (questionId, answerId) => {
     setIsLoading(true);
 
     await questions
-      .editAnAnswer(questionId, answerId, name)
+      .editAnAnswer(questionId, answerId, input)
       .then((res) => {
-       // window.location.href = location.pathname;
+        console.log(res.body);
+        window.location.href = location.pathname;
         toast.success("You've updated your answer!", {
           position: "top-center",
           autoClose: 2000,
@@ -107,14 +106,21 @@ const QuestionCardDetailed = () => {
   };
 
   const deleteAnswer = async (questionId, answerId) => {
-    await questions.deleteAnAnswer(questionId, answerId).then((res) => {
-      window.location.href = location.pathname;
-    });
+    axios
+      .all([
+        questions.decreaseNumberOfAnswers(helpers.decodeToken()._id),
+        questions.deleteAnAnswer(questionId, answerId),
+      ])
+      .then(
+        axios.spread((obj1, obj2) => {
+          window.location.href = location.pathname;
+        })
+      );
   };
 
-  const handleInput = (event) => {
-    const value = event.target.value;
-    const name = event.target.name;
+  const handleInput = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
 
     setInput((prevInput) => ({
       ...prevInput,
@@ -126,44 +132,34 @@ const QuestionCardDetailed = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    await questions
-      .postAnAnswer(location.pathname.split("/")[2], input)
-      .then((res) => {
-        window.location.href = location.pathname;
-        toast.success("You've posted a new answer!", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      })
-      .catch((error) => {
-        toast.warning("Something's not right, try again!", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      });
-    setIsLoading(false);
-
-    await questions
-      .increaseNumberOfAnswers(helpers.decodeToken()._id)
-      .catch((err) => console.log(err));
+    axios
+      .all([
+        questions.increaseNumberOfAnswers(helpers.decodeToken()._id),
+        questions.postAnAnswer(location.pathname.split("/")[2], input),
+      ])
+      .then(
+        axios.spread((obj1, obj2) => {
+          window.location.href = location.pathname;
+          toast.success("You've posted a new answer!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        })
+      );
   };
 
   useEffect(() => {
-    fetchQuestion();
+    if (checkToken()) fetchQuestion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [votesChange]);
 
   return (
     <div className="question-card">
-      <Container fluid>
+      <Container fluid="sm">
         <Card body style={{ backgroundColor: "#ebcf73" }}>
           <CardTitle tag="h1" style={{ textAlign: "left" }}>
             <CardLink
@@ -239,15 +235,13 @@ const QuestionCardDetailed = () => {
             noOfAnswerLikes={oneAnswer.votes}
             qID={question._id}
             aID={oneAnswer._id}
-            modal={modal}
-            editAnswer={editAnswer}
+            editAnswer={handleEditAnswer}
             content={"content"}
             upvoteAnswer={upvoteAnswer}
             downvoteAnswer={downvoteAnswer}
-            openEditModal={toggle}
             deleteAnswer={deleteAnswer}
             oldQuestion={oneAnswer.content}
-            handleEditSubmit={handleInput}
+            handleEditInput={handleInput}
             answerTime={moment(`${oneAnswer.createdAt}`).format("LLL")}
             isMine={oneAnswer.by._id === helpers.decodeToken()._id}
           />

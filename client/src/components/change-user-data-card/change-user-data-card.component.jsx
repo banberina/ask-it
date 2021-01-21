@@ -41,8 +41,7 @@ const ChangeProfileDataCard = (props) => {
     const value = event.target.value;
     const name = event.target.name;
 
-    setName((...prevValue) => ({
-      ...prevValue,
+    setName(() => ({
       [name]: value,
     }));
     setSurname(() => ({
@@ -141,7 +140,9 @@ const ChangeProfileDataCard = (props) => {
       <br />
       <Container fluid="sm">
         <Card body inverse color="info">
-          <h2 className="special-font-header"  style={{ textAlign: "left" }}>Change my profile info</h2>
+          <h2 className="special-font-header" style={{ textAlign: "left" }}>
+            Change my profile info
+          </h2>
           <hr />
           <Row>
             <Col md="4">
@@ -223,7 +224,7 @@ const ChangeProfileDataCard = (props) => {
           </Form>
         </Card>
       </Container>
-      <br/>
+      <br />
     </div>
   );
 };
